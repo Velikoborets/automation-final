@@ -22,13 +22,13 @@ $operatorsData = json_encode(Condition::availableOperators());
 <div id="conditions">
     <div class="condition-wrapper" data-default-rule="true">
         <?= Html::dropDownList('conditions[0][field]', null, Condition::availableFields(),
-            ['prompt' => 'Select a field', 'class' => 'form-control form-control-sm']) ?>
+            ['prompt' => 'Сущность', 'class' => 'form-control form-control-sm']) ?>
 
         <?= Html::dropDownList('conditions[0][operator]', null, Condition::availableOperators(),
-            ['prompt' => 'Select an operator', 'class' => 'form-control form-control-sm']) ?>
+            ['prompt' => 'Знак', 'class' => 'form-control form-control-sm']) ?>
 
         <?= Html::textInput('conditions[0][value]', '',
-            ['placeholder' => 'Value', 'class' => 'form-control form-control-sm']) ?>
+            ['placeholder' => 'Значение', 'class' => 'form-control form-control-sm']) ?>
 
         <?= Html::button('+', ['class' => 'btn btn-success btn-sm', 'onclick' => 'createCondition()']) ?>
         <?= Html::button('-', ['class' => 'btn btn-danger btn-sm btn-m', 'onclick' => 'removeCondition(this);']) ?>
