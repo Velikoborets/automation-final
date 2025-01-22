@@ -33,9 +33,9 @@ function createCondition() {
 
     for (const key in fields) {
         const option = document.createElement('option');
-        option.value = key; //  key == public const в Модели Condition и начинается с 0
-        option.textContent = fields[key]; // fields[0] == ROI, пишем значение ROI как текст в <option>;
-        field.appendChild(option); // Добавляем <option> внутрь <select>
+        option.value = key;
+        option.textContent = fields[key];
+        field.appendChild(option);
     }
 
     const operatorDefaultOption = document.createElement('option');

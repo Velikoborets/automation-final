@@ -35,9 +35,7 @@ class AutomationController extends \yii\web\Controller
             $rule->user_id = Yii::$app->user->id;
 
             if ($rule->save()) {
-
                 if (isset($post['conditions']) && is_array($post['conditions'])) {
-
                     foreach ($post['conditions'] as $conditionData) {
                         $condition = new Condition();
                         $condition->rule_id = $rule->id;
@@ -56,7 +54,6 @@ class AutomationController extends \yii\web\Controller
                         }
                     }
                 }
-
                 $transaction->commit();
                 Yii::$app->session->setFlash('success', 'Правило успешно сохранено.');
 
