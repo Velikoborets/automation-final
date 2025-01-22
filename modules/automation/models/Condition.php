@@ -17,6 +17,11 @@ class Condition extends \yii\db\ActiveRecord
     public const REVENUE = 2;
     public const APR = 3;
 
+    public static function tableName()
+    {
+        return 'conditions';
+    }
+
     public static function availableOperators(): array
     {
         return [

@@ -13,7 +13,9 @@ $operatorsData = json_encode(Condition::availableOperators());
 
 <h1>Задайте условия</h1>
 
-<?= Html::beginForm(['rule/create'], 'post', ['id' => 'rule-form']) ?>
+<?php Yii::$app->session->getFlash('error') ?>
+
+<?= Html::beginForm(['automation/create'], 'post', ['id' => 'rule-form']) ?>
 
 <?= Html::textInput('name', '', ['placeholder' => 'Имя правила',
     'class' => 'form-control form-control-sm', 'required' => true]) ?>
