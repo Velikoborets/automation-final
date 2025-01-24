@@ -1,19 +1,30 @@
 let conditionIndex = 1;
 
 function createCondition() {
-
     if (conditionIndex >= 5) {
         alert('Количество правил не должно превышать 5.');
         return;
     }
 
     const conditionsDiv = document.getElementById('conditions');
+    if (!conditionsDiv) {
+        console.error("conditionsDiv element not found");
+        return;
+    }
+
+    const fieldsDataElement = document.getElementById('fields-data');
+    const operatorsDataElement = document.getElementById('operators-data');
+
+    if (!fieldsDataElement || !operatorsDataElement) {
+        console.error("fields-data or operators-data element not found");
+        return;
+    }
+
+    const fields = JSON.parse(fieldsDataElement.value);
+    const operators = JSON.parse(operatorsDataElement.value);
 
     const newConditionDiv = document.createElement('div');
     newConditionDiv.className = 'condition-wrapper';
-
-    const fields = JSON.parse(document.getElementById('fields-data').value);
-    const operators = JSON.parse(document.getElementById('operators-data').value);
 
     const field = document.createElement('select');
     field.classList.add('form-control', 'form-control-sm');
@@ -75,7 +86,6 @@ function createCondition() {
 
     newConditionDiv.appendChild(addButton);
     newConditionDiv.appendChild(removeButton);
-
     conditionsDiv.appendChild(newConditionDiv);
     conditionIndex++;
 }
@@ -90,10 +100,16 @@ function removeCondition(button) {
     }
 }
 
-document.getElementById('rule-form').addEventListener('submit', function(event) {
-    const conditionWrappers = document.querySelectorAll('.condition-wrapper');
-    if (conditionWrappers.length === 0) {
-        event.preventDefault();
-        alert('Необходимо добавить хотя бы одно условие!');
-    }
-});
+const ruleForm = document.getElementById('rule-form');
+if (ruleForm) {
+    console.log("rule-form element found, adding submit event listener");
+    ruleForm.addEventListener('submit', function(event) {
+        const conditionWrappers = document.querySelectorAll('.condition-wrapper');
+        if (conditionWrappers.length === 0) {
+            event.preventDefault();
+            alert('Необходимо добавить хотя бы одно условие!');
+        }
+    });
+} else {
+    console.log("rule-form element not found, skipping submit event listener");
+}

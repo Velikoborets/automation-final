@@ -64,11 +64,58 @@ class AutomationController extends \yii\web\Controller
         return $this->render('create');
     }
 
+    public function actionView($id)
+    {
+        $rule = $this->findModel($id);
+
+        if ($rule->user_id == Yii::$app->user->id) {
+            $conditionData = Condition::find()->where(['rule_id' => $rule->id])->all();
+
+            $data = [];
+            foreach ($conditionData as $condition) {
+
+                $fields = $condition->availableFields();
+                $field = '';
+                foreach ($fields as $key => $value) {
+                    if ($key == $condition->attributes['field']) {
+                        $field = $value;
+                    }
+                }
+
+                $operators = $condition->availableOperators();
+                $operator = '';
+                foreach ($operators as $key => $value) {
+                    if ($key == $condition->attributes['operator']) {
+                        $operator = $value;
+                    }
+                }
+
+                $data[] = [
+                    'field' => $field,
+                    'operator' => $operator,
+                    'value' => $condition->value,
+                    'ruleName' => $rule->name,
+                ];
+            }
+
+            $dataProvider = new \yii\data\ArrayDataProvider([
+                'allModels' => $data,
+                'pagination' => [
+                    'pageSize' => 5,
+                ],
+            ]);
+    
+            return $this->render('show', [
+                'dataProvider' => $dataProvider,
+            ]);      
+        }
+    }
+
     public function actionDelete($id): yii\web\Response
     {
         $rule = $this->findModel($id);
 
-        if ($rule->user_id === Yii::$app->user->id) {
+        if ($rule->user_id == Yii::$app->user->id) {
             $rule->delete();
         }
 
