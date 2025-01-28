@@ -5,6 +5,16 @@ namespace app\modules\automation\models;
 use yii\db\ActiveRecord;
 use app\modules\user\models\User;
 
+/**
+ * Model class for table "rules".
+ *
+ * @property integer $id
+ * @property integer $user_id
+ * @property string $name
+ * @property integer $updated_at
+ * @property integer $created_at
+ * @property-read \yii\db\ActiveQuery $user
+ */
 class Rule extends ActiveRecord
 {
     public static function tableName(): string
@@ -34,12 +44,17 @@ class Rule extends ActiveRecord
         ];
     }
 
+    /**
+     * Gets the user associated with the rule
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getUser(): \yii\db\ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'timestamp' => [

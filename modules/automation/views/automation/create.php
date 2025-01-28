@@ -16,26 +16,24 @@ $operatorsData = json_encode(Condition::availableOperators());
 <?php Yii::$app->session->getFlash('error') ?>
 
 <?= Html::beginForm(['automation/create'], 'post', ['id' => 'rule-form']) ?>
+    <div id="conditions">
+        <?= Html::textInput('name', '', ['placeholder' => 'Имя правила',
+            'class' => 'form-control form-control-sm', 'required' => true]) ?>
+        <br>
+        <div class="condition-wrapper" data-default-rule="true">
+            <?= Html::dropDownList('conditions[0][field]', null, Condition::availableFields(),
+                ['prompt' => 'Сущность', 'class' => 'form-control form-control-sm']) ?>
 
-<?= Html::textInput('name', '', ['placeholder' => 'Имя правила',
-    'class' => 'form-control form-control-sm', 'required' => true]) ?>
-<br>
+            <?= Html::dropDownList('conditions[0][operator]', null, Condition::availableOperators(),
+                ['prompt' => 'Знак', 'class' => 'form-control form-control-sm']) ?>
 
-<div id="conditions">
-    <div class="condition-wrapper" data-default-rule="true">
-        <?= Html::dropDownList('conditions[0][field]', null, Condition::availableFields(),
-            ['prompt' => 'Сущность', 'class' => 'form-control form-control-sm']) ?>
+            <?= Html::textInput('conditions[0][value]', '',
+                ['placeholder' => 'Значение', 'class' => 'form-control form-control-sm']) ?>
 
-        <?= Html::dropDownList('conditions[0][operator]', null, Condition::availableOperators(),
-            ['prompt' => 'Знак', 'class' => 'form-control form-control-sm']) ?>
-
-        <?= Html::textInput('conditions[0][value]', '',
-            ['placeholder' => 'Значение', 'class' => 'form-control form-control-sm']) ?>
-
-        <?= Html::button('+', ['class' => 'btn btn-success btn-sm', 'onclick' => 'createCondition()']) ?>
-        <?= Html::button('-', ['class' => 'btn btn-danger btn-sm btn-m', 'onclick' => 'removeCondition(this);']) ?>
+            <?= Html::button('+', ['class' => 'btn btn-success btn-sm', 'onclick' => 'createCondition()']) ?>
+            <?= Html::button('-', ['class' => 'btn btn-danger btn-sm btn-m', 'onclick' => 'removeCondition(this);']) ?>
+        </div>
     </div>
-</div>
 
 <?= Html::hiddenInput('fields-data', $fieldsData, ['id' => 'fields-data']) ?>
 <?= Html::hiddenInput('operators-data', $operatorsData, ['id' => 'operators-data']) ?>

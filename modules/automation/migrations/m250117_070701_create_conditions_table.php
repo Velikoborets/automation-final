@@ -1,5 +1,7 @@
 <?php
 
+namespace app\modules\automation\migrations;
+
 use yii\db\Migration;
 
 class m250117_070701_create_conditions_table extends Migration

@@ -1,5 +1,4 @@
 let conditionIndex = 1;
-
 function createCondition() {
     if (conditionIndex >= 5) {
         alert('Количество правил не должно превышать 5.');

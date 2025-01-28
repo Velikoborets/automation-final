@@ -15,9 +15,7 @@ $this->title = 'Авторизуйтесь';
 <div class="user-login">
     <h2><?= Html::encode($this->title) ?></h2>
 
-    <?php $form = ActiveForm::begin([
-        'action' => ['user/login'], 'method' => 'post'
-    ]) ?>
+    <?php $form = ActiveForm::begin(['action' => ['user/login'], 'method' => 'post']) ?>
 
     <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 

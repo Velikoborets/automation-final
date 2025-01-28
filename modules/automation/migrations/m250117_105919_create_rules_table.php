@@ -1,5 +1,7 @@
 <?php
 
+namespace app\modules\automation\migrations;
+
 use yii\db\Migration;
 
 class m250117_105919_create_rules_table extends Migration

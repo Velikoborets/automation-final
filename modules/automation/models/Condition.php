@@ -4,6 +4,16 @@ namespace app\modules\automation\models;
 
 use yii\db\ActiveRecord;
 
+/**
+ * Model class for table "conditions".
+ *
+ * @property integer $rule_id
+ * @property integer $operator
+ * @property integer $field
+ * @property number $value
+ * @property integer $created_at
+ * @property integer $updated_at
+ */
 class Condition extends \yii\db\ActiveRecord
 {
     public const LESS_THAN = 0;
@@ -17,7 +27,7 @@ class Condition extends \yii\db\ActiveRecord
     public const REVENUE = 2;
     public const APR = 3;
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'conditions';
     }
@@ -53,7 +63,7 @@ class Condition extends \yii\db\ActiveRecord
         ];
     }
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'timestamp' => [

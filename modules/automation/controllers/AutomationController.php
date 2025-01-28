@@ -9,7 +9,12 @@ use app\modules\automation\models\Condition;
 
 class AutomationController extends \yii\web\Controller
 {
-    public function actionIndex()
+    /**
+     * Displays the list of rules
+     *
+     * @return string the index view containing the rules list
+     */
+    public function actionIndex(): string
     {
         $dataProvider = new ActiveDataprovider([
             'query' => Rule::find(),
@@ -23,6 +28,12 @@ class AutomationController extends \yii\web\Controller
         ]);
     }
 
+    /**
+     * Creates a rule and associated conditions
+     *
+     * @throws \yii\db\Exception if there are errors with the DB transaction
+     * @return string|\yii\web\Response the view or a redirect to this page
+     */
     public function actionCreate()
     {
         $transaction = Yii::$app->db->beginTransaction();
@@ -44,9 +55,9 @@ class AutomationController extends \yii\web\Controller
                         $condition->value = $conditionData['value'];
 
                         if (!$condition->validate()) {
-                            $transaction->rollback();
-                            Yii::$app->session->setFlash('error', 'Не удалось сохранить условие. Ошибки: '
-                            . implode(', ', $condition->getFirstErrors()));
+                            $transaction->rollBack();
+                            Yii::$app->session->setFlash('error', 'Не удалось сохранить условие. Ошибка: '
+                                . implode(', ', $condition->getFirstErrors()));
 
                             return $this->redirect(['create']);
                         } else {
@@ -54,17 +65,28 @@ class AutomationController extends \yii\web\Controller
                         }
                     }
                 }
+
                 $transaction->commit();
                 Yii::$app->session->setFlash('success', 'Правило успешно сохранено.');
 
                 return $this->redirect(['index']);
             }
+
+            Yii::$app->session->setFlash('error', 'Не удалось сохранить правило. Ошибка: '
+                . implode(', ', $rule->getFirstErrors()));
         }
 
         return $this->render('create');
     }
 
-    public function actionView($id)
+    /**
+     * Displays the data of a specific rule
+     *
+     * @param integer $id the identifier of the model
+     * @throws \Exception if there are errors associated with the DB transaction
+     * @return string the view containing the data of the specific rule
+     */
+    public function actionView(int $id): string
     {
         $rule = $this->findModel($id);
 
@@ -73,7 +95,6 @@ class AutomationController extends \yii\web\Controller
 
             $data = [];
             foreach ($conditionData as $condition) {
-
                 $fields = $condition->availableFields();
                 $field = '';
                 foreach ($fields as $key => $value) {
@@ -94,7 +115,6 @@ class AutomationController extends \yii\web\Controller
                     'field' => $field,
                     'operator' => $operator,
                     'value' => $condition->value,
-                    'ruleName' => $rule->name,
                 ];
             }
 
@@ -104,14 +124,22 @@ class AutomationController extends \yii\web\Controller
                     'pageSize' => 5,
                 ],
             ]);
-    
-            return $this->render('show', [
-                'dataProvider' => $dataProvider,
-            ]);      
         }
+
+        return $this->render('show', [
+            'dataProvider' => $dataProvider,
+            'ruleName' => $rule->name,
+        ]);
     }
 
-    public function actionDelete($id): yii\web\Response
+    /**
+     * Deletes the record with the rule
+     *
+     * @param integer $id the identifier of the model
+     * @throws \Throwable if there are exceptions associated with searching for the record in the DB
+     * @return \yii\web\Response redirects to the index view
+     * */
+    public function actionDelete(int $id): \yii\web\Response
     {
         $rule = $this->findModel($id);
 
@@ -123,6 +151,13 @@ class AutomationController extends \yii\web\Controller
         return $this->redirect(['index']);
     }
 
+    /**
+     * Find the record with the rule in the rules table
+     *
+     * @param integer $id the identifier of the model
+     * @throws \Exception if the user is not found in the DB (rules table)
+     * @return Rule the found model contains data from the DB
+     */
     public function findModel($id): Rule
     {
         $model = Rule::findOne($id);
