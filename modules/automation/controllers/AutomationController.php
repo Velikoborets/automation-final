@@ -57,7 +57,7 @@ class AutomationController extends \yii\web\Controller
                         if (!$condition->validate()) {
                             $transaction->rollBack();
                             Yii::$app->session->setFlash('error', 'Не удалось сохранить условие. Ошибка: '
-                                . implode(', ', $condition->getFirstErrors()));
+                            . implode(', ', $condition->getFirstErrors()));
 
                             return $this->redirect(['create']);
                         } else {
@@ -73,7 +73,7 @@ class AutomationController extends \yii\web\Controller
             }
 
             Yii::$app->session->setFlash('error', 'Не удалось сохранить правило. Ошибка: '
-                . implode(', ', $rule->getFirstErrors()));
+            . implode(', ', $rule->getFirstErrors()));
         }
 
         return $this->render('create');
@@ -138,7 +138,7 @@ class AutomationController extends \yii\web\Controller
      * @param integer $id the identifier of the model
      * @throws \Throwable if there are exceptions associated with searching for the record in the DB
      * @return \yii\web\Response redirects to the index view
-     * */
+     */
     public function actionDelete(int $id): \yii\web\Response
     {
         $rule = $this->findModel($id);

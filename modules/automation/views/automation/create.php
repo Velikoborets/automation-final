@@ -30,8 +30,9 @@ $operatorsData = json_encode(Condition::availableOperators());
             <?= Html::textInput('conditions[0][value]', '',
                 ['placeholder' => 'Значение', 'class' => 'form-control form-control-sm']) ?>
 
-            <?= Html::button('+', ['class' => 'btn btn-success btn-sm', 'onclick' => 'createCondition()']) ?>
-            <?= Html::button('-', ['class' => 'btn btn-danger btn-sm btn-m', 'onclick' => 'removeCondition(this);']) ?>
+            <?= Html::button('+', ['class' => 'btn btn-success btn-sm add-condition-button']) ?>
+            <?= Html::button('-', ['class' => 'btn btn-danger btn-sm remove-condition-button btn-m', 
+            'data-default-rule' => true]) ?>
         </div>
     </div>
 
