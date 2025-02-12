@@ -9,6 +9,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Список правил', 'url' 
 $fieldsData = json_encode(Condition::availableFields());
 $operatorsData = json_encode(Condition::availableOperators());
 
+// h
 ?>
 
 <h1>Задайте условия</h1>
